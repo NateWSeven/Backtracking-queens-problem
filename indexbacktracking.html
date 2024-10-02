@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>N-Queens Backtracking Visualization</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 20px;
+        }
+        #board {
+            display: grid;
+            grid-template-columns: repeat(8, 60px);
+            grid-template-rows: repeat(8, 60px);
+            margin: auto;
+        }
+        .cell {
+            width: 60px;
+            height: 60px;
+            border: 1px solid #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #f0f0f0;
+        }
+        .queen {
+            background-color: red;
+        }
+        .highlight {
+            background-color: yellow;
+        }
+    </style>
+</head>
+<body>
+
+<h1>N-Queens Backtracking Visualization</h1>
+<div id="board"></div>
+<button onclick="solveNQueens()">Start Visualization</button>
+<button onclick="resetBoard()">Reset Board</button>
+
+<script>
+    const N = 8; // Size of the board
+    let board = Array.from({ length: N }, () => Array(N).fill(0));
+    let stepDelay = 500; // Delay in milliseconds for visualization steps
+
+    function createBoard() {
+        const boardDiv = document.getElementById('board');
+        boardDiv.innerHTML = '';
+        for (let i = 0; i < N; i++) {
+            for (let j = 0; j < N; j++) {
+                const cell = document.createElement('div');
+                cell.className = 'cell';
+                cell.id = `cell-${i}-${j}`;
+                boardDiv.appendChild(cell);
+            }
+        }
+    }
+
+    function isSafe(row, col) {
+        for (let i = 0; i < col; i++) {
+            if (board[row][i]) return false;
+        }
+        for (let i = row, j = col; i >= 0 && j >= 0; i--, j--) {
+            if (board[i][j]) return false;
+        }
+        for (let i = row, j = col; j >= 0 && i < N; i++, j--) {
+            if (board[i][j]) return false;
+        }
+        return true;
+    }
+
+    async function placeQueens(col) {
+        if (col >= N) return true;
+
+        for (let i = 0; i < N; i++) {
+            if (isSafe(i, col)) {
+                board[i][col] = 1;
+                document.getElementById(`cell-${i}-${col}`).classList.add('queen');
+                await new Promise(resolve => setTimeout(resolve, stepDelay)); // Delay for visualization
+
+                if (await placeQueens(col + 1)) return true;
+
+                // Backtrack
+                board[i][col] = 0;
+                document.getElementById(`cell-${i}-${col}`).classList.remove('queen');
+                await new Promise(resolve => setTimeout(resolve, stepDelay)); // Delay for visualization
+            }
+        }
+        return false;
+    }
+
+    function solveNQueens() {
+        createBoard();
+        placeQueens(0);
+    }
+
+    function resetBoard() {
+        createBoard();
+    }
+
+    window.onload = createBoard;
+</script>
+
+</body>
+</html><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>N-Queens Backtracking Visualization</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 20px;
+        }
+        #board {
+            display: grid;
+            grid-template-columns: repeat(8, 60px);
+            grid-template-rows: repeat(8, 60px);
+            margin: auto;
+        }
+        .cell {
+            width: 60px;
+            height: 60px;
+            border: 1px solid #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #f0f0f0;
+        }
+        .queen {
+            background-color: red;
+        }
+        .highlight {
+            background-color: yellow;
+        }
+    </style>
+</head>
+<body>
+
+<h1>N-Queens Backtracking Visualization</h1>
+<div id="board"></div>
+<button onclick="solveNQueens()">Start Visualization</button>
+<button onclick="resetBoard()">Reset Board</button>
+
+<script>
+    const N = 8; // Size of the board
+    let board = Array.from({ length: N }, () => Array(N).fill(0));
+    let stepDelay = 500; // Delay in milliseconds for visualization steps
+
+    function createBoard() {
+        const boardDiv = document.getElementById('board');
+        boardDiv.innerHTML = '';
+        for (let i = 0; i < N; i++) {
+            for (let j = 0; j < N; j++) {
+                const cell = document.createElement('div');
+                cell.className = 'cell';
+                cell.id = `cell-${i}-${j}`;
+                boardDiv.appendChild(cell);
+            }
+        }
+    }
+
+    function isSafe(row, col) {
+        for (let i = 0; i < col; i++) {
+            if (board[row][i]) return false;
+        }
+        for (let i = row, j = col; i >= 0 && j >= 0; i--, j--) {
+            if (board[i][j]) return false;
+        }
+        for (let i = row, j = col; j >= 0 && i < N; i++, j--) {
+            if (board[i][j]) return false;
+        }
+        return true;
+    }
+
+    async function placeQueens(col) {
+        if (col >= N) return true;
+
+        for (let i = 0; i < N; i++) {
+            if (isSafe(i, col)) {
+                board[i][col] = 1;
+                document.getElementById(`cell-${i}-${col}`).classList.add('queen');
+                await new Promise(resolve => setTimeout(resolve, stepDelay)); // Delay for visualization
+
+                if (await placeQueens(col + 1)) return true;
+
+                // Backtrack
+                board[i][col] = 0;
+                document.getElementById(`cell-${i}-${col}`).classList.remove('queen');
+                await new Promise(resolve => setTimeout(resolve, stepDelay)); // Delay for visualization
+            }
+        }
+        return false;
+    }
+
+    function solveNQueens() {
+        createBoard();
+        placeQueens(0);
+    }
+
+    function resetBoard() {
+        createBoard();
+    }
+
+    window.onload = createBoard;
+</script>
+
+</body>
+</html>
